@@ -1,0 +1,91 @@
+plaintext
+caderno_tematico/
+│
+├── fontes_abertas.md            # Listagem das fontes usadas
+├── objetivos_estudo.md          # Objetivos de estudo
+├── perguntas_estrategicas.md    # Perguntas estratégicas
+├── resumos.md                   # Resumos das fontes
+├── glossario.md                 # Glossário de conceitos
+└── prompts_reutilizaveis.md     # Prompts reutilizáveis
+
+1. fontes_abertas.md
+markdown
+# Fontes Abertas sobre Finanças
+
+1. **"Introdução às Finanças"** - [Link para PDF](https://www.exemplo.com/introducao_financas.pdf)
+   - Resumo: Este material aborda os fundamentos das finanças pessoais e empresariais.
+
+2. **"Conceitos Básicos de Economia"** - [Link para PDF](https://www.exemplo.com/conceitos_basicos_economia.pdf)
+   - Resumo: Um guia introdutório que explica conceitos econômicos que afetam o cotidiano.
+
+3. **"Planejamento Financeiro Pessoal"** - [Link para PDF](https://www.exemplo.com/planejamento_financeiro.pdf)
+   - Resumo: Este documento fornece diretrizes sobre como gerenciar finanças pessoais de forma eficiente.
+
+4. **"Investimentos para Iniciantes"** - [Link para PDF](https://www.exemplo.com/investimentos_iniciantes.pdf)
+   - Resumo: Uma introdução aos principais tipos de investimentos disponíveis.
+
+5. **"Noções de Crédito e Empréstimos"** - [Link para PDF](https://www.exemplo.com/noções_credito.pdf)
+   - Resumo: Explica como funciona o sistema de crédito e os tipos de empréstimos disponíveis.
+
+2. objetivos_estudo.md
+markdown
+# Objetivos de Estudo
+
+- Compreender os princípios básicos das finanças pessoais.
+- Identificar os principais conceitos econômicos e sua aplicação no dia a dia.
+- Aprender a elaborar um planejamento financeiro pessoal eficaz.
+- Conhecer os diferentes tipos de investimentos e suas características.
+- Entender o funcionamento do sistema de crédito e empréstimos.
+
+3. perguntas_estrategicas.md
+markdown
+# Perguntas Estratégicas
+
+1. O que são finanças pessoais e qual a sua importância?
+2. Quais conceitos econômicos são essenciais para a compreensão do mercado?
+3. Como posso elaborar um planejamento financeiro eficiente?
+4. Quais são os tipos de investimentos mais adequados para iniciantes?
+5. Como funcionam os juros em um empréstimo e quais cuidados devo ter?
+
+4. resumos.md
+markdown
+# Resumos das Fontes
+
+## 1. Introdução às Finanças
+Este material proporciona uma visão geral sobre a gestão financeira, destacando a importância do controle de gastos e a construção de um orçamento.
+
+## 2. Conceitos Básicos de Economia
+Os conceitos de oferta, demanda, mercado e fatores econômicos são explicados de maneira acessível e aplicada ao cotidiano.
+
+## 3. Planejamento Financeiro Pessoal
+Aborda como definir metas financeiras, elaborar um fluxo de caixa e a importância de reservas financeiras.
+
+## 4. Investimentos para Iniciantes
+Explora os principais tipos de investimentos, como ações, renda fixa e fundos de investimento, enfatizando a importância da diversificação.
+
+## 5. Noções de Crédito e Empréstimos
+Detalha os tipos de crédito disponíveis, como financiamentos e cartões, além do impacto dos juros nas dívidas.
+
+5. glossario.md
+markdown
+# Glossário de Conceitos
+
+- **Finanças Pessoais**: Gestão do dinheiro e ativos de um indivíduo.
+- **Planejamento Financeiro**: Processo de definir e atingir objetivos financeiros.
+- **Investimento**: Ação de aplicar recursos em ativos com potencial de retorno.
+- **Crédito**: Capacidade de obter bens ou serviços mediante o pagamento posterior.
+- **Juros**: Compensação paga pelo uso de capital emprestado.
+
+6. prompts_reutilizaveis.md
+markdown
+# Prompts Reutilizáveis
+
+1. Explique os princípios básicos das finanças pessoais.
+2. Descreva a relação entre oferta e demanda em um mercado.
+3. Como estabelecer um orçamento mensal eficaz?
+4. Quais fatores devem ser considerados ao investir?
+5. Quais são os tipos de crédito disponíveis e suas características?
+
+Conclusão
+Este projeto oferece uma abordagem organizada para o estudo de finanças, permitindo a curadoria de fontes, formulando estratégias de aprendizado e criando um guia útil para futuras referências. Sinta-se à vontade para ajustar o conteúdo conforme necessário ou adicionar novas fontes e informações! Se precisar de mais ajuda, estou à disposição.
+
