@@ -1,0 +1,90 @@
+
+plaintext
+voice_assistant/
+│
+├── main.py                     # Código principal da aplicação
+├── requirements.txt            # Dependências do projeto
+└── README.md                   # Documentação do projeto
+
+1. requirements.txt
+plaintext
+openai
+gtts
+pydub
+speechrecognition
+
+2. main.py (Código Principal)
+python
+
+Ver todos
+        model="gpt-3.5-turbo",  # ou o modelo que você estiver utilizando
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+    return response['choices'][0]['message']['content']
+
+def text_to_speech(text, lang='pt'):
+    """Converte texto em fala usando gTTS"""
+    tts = gTTS(text=text, lang=lang, slow=False)
+    tts.save("response.mp3")
+    # Toca o áudio gerado
+    playsound("response.mp3")
+
+def main():
+    while True:
+        user_input = transcribe_audio_to_text()
+        if user_input:
+            response = generate_response(user_input)
+            print(f"Resposta do ChatGPT: {response}")
+            text_to_speech(response)
+
+if __name__ == "__main__":
+    main()
+
+Executar
+
+3. README.md (Documentação do Projeto)
+markdown
+# Assistente de Voz Multilíngue com Whisper e ChatGPT
+
+Este projeto utiliza as células da OpenAI Whisper para reconhecimento de fala e do ChatGPT para geração de resposta, além do Google Text-to-Speech (gTTS) para sintetizar as respostas em voz.
+
+## Requisitos
+
+- Python 3.x
+- Conta na OpenAI e chave da API
+- Dependências do projeto (instaladas a partir do requirements.txt)
+
+## Instalação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu_usuario/voice_assistant.git
+   cd voice_assistant
+
+Instale as dependências:
+
+bash
+pip install -r requirements.txt
+
+Configure sua chave da API:
+
+Obtenha sua chave de API da OpenAI e substitua "SUA_API_KEY" no arquivo main.py.
+Execução
+Execute o arquivo main.py com o comando:
+
+bash
+python main.py
+
+Instruções
+Fale algo para o assistente ouvir.
+O assistente reconhecerá sua fala, responderá usando o ChatGPT e converterá a resposta em áudio.
+Considerações Finais
+Este projeto demonstra como integrar tecnologias de reconhecimento de fala, processamento de linguagem natural e síntese de voz para criar um assistente conversacional multilíngue.
+
+
+### Conclusão
+
+Este projeto oferece uma implementação básica de um assistente de voz que combina funcionalidades de voz para texto e texto para voz. Você pode expandir o sistema adicionando funcionalidades como suporte a múltiplos idiomas ou diferentes vozes. Se tiver perguntas ou precisar de assistência adicional, não hesite em perguntar!
+
