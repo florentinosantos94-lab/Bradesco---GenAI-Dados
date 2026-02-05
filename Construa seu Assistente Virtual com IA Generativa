@@ -1,149 +1,69 @@
+import streamlit as st
+import pandas as pd
 
-plaintext
-relacionamento_financeiro/
-│
-├── main.py                     # Código principal da aplicação
-├── requirements.txt            # Dependências do projeto
-├── chatbot.py                  # Módulo do chatbot
-├── finance_calculator.py       # Módulo de cálculos financeiros
-└── README.md                   # Documentação do projeto
+# CONFIGURAÇÃO DA PÁGINA (UX)
+st.set_page_config(page_title="ByteSafe AI", page_icon="💰")
 
-1. requirements.txt
-plaintext
-openai
-Flask
-numpy
+# ESTILO CSS PARA MELHORAR A UX
+st.markdown("""
+    <style>
+    .main { background-color: #f5f7f9; }
+    .stButton>button { width: 100%; border-radius: 20px; background-color: #007bff; color: white; }
+    </style>
+    """, unsafe_allow_html=True)
 
-2. main.py (Código Principal)
-python
+# LÓGICA DE CÁLCULO FINANCEIRO (BACKEND)
+def calcular_investimento(valor_inicial, meses, taxa_anual):
+    taxa_mensal = (1 + taxa_anual/100)**(1/12) - 1
+    saldo_final = valor_inicial * (1 + taxa_mensal)**meses
+    return saldo_final
 
-Ver todos
-from flask import Flask, request, jsonify
-from chatbot import ChatBot
-from finance_calculator import FinanceCalculator
+# PERSISTÊNCIA DE CONTEXTO (MEMÓRIA)
+if "historico" not in st.session_state:
+    st.session_state.historico = []
 
-app = Flask(__name__)
-chatbot = ChatBot()
-calculator = FinanceCalculator()
+# INTERFACE LÍQUIDA (FRONTEND)
+st.title("💰 ByteSafe AI")
+st.subheader("Seu assistente financeiro personalizado")
 
-@app.route('/ask', methods=['POST'])
-def ask():
-    user_input = request.json.get('question')
+# SIDEBAR - PERFIL DO USUÁRIO (PERSONALIZAÇÃO)
+with st.sidebar:
+    st.header("Seu Perfil")
+    nome = st.text_input("Como quer ser chamado?", "Investidor")
+    perfil = st.selectbox("Perfil de Risco", ["Conservador", "Moderado", "Arrojado"])
+    st.info(f"Olá {nome}, ajustaremos as respostas para o perfil {perfil}.")
+
+# ÁREA DE CHAT (IA GENERATIVA / NLP)
+st.write("---")
+user_input = st.text_input("Pergunte algo (ex: 'O que é CDB?' ou 'Simular investimento')")
+
+if user_input:
+    # Simulação de Resposta Baseada em Contexto (IA)
+    resposta = ""
+    entrada_lower = user_input.lower()
+
+    if "cdb" in entrada_lower:
+        resposta = "O CDB é como um empréstimo que você faz ao banco. Em troca, o banco te devolve o dinheiro com juros. Para o seu perfil " + perfil + ", é uma excelente escolha de baixo risco."
     
-    if user_input.lower().startswith('calcule'):
-        response = calculator.perform_calculation(user_input)
+    elif "simular" in entrada_lower or "investimento" in entrada_lower:
+        st.warning("Vamos fazer uma simulação rápida!")
+        v_ini = st.number_input("Valor Inicial (R$)", value=1000.0)
+        tempo = st.slider("Meses", 1, 60, 12)
+        taxa = 12.75 # Exemplo de Taxa Selic
+        final = calcular_investimento(v_ini, tempo, taxa)
+        resposta = f"Com base na taxa de 12.75% a.a., seu saldo após {tempo} meses seria de R$ {final:.2f}."
+
     else:
-        response = chatbot.get_response(user_input)
+        resposta = "Desculpe, ainda estou aprendendo sobre esse tema. Tente perguntar sobre CDB, Tesouro Direto ou Simulações."
 
-    return jsonify({'response': response})
+    # Adicionando ao histórico para persistência
+    st.session_state.historico.append({"user": user_input, "bot": resposta})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# EXIBIÇÃO DO HISTÓRICO (UX DE MENSAGEM)
+for chat in reversed(st.session_state.historico):
+    st.markdown(f"**👤 Você:** {chat['user']}")
+    st.markdown(f"**🤖 ByteSafe AI:** {chat['bot']}")
+    st.write("---")
 
-Executar
-
-3. chatbot.py (Módulo do Chatbot)
-python
-
-Ver todos
-import openai
-
-class ChatBot:
-    def __init__(self):
-        openai.api_key = "SUA_API_KEY"
-
-    def get_response(self, user_input):
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "user", "content": user_input}
-            ]
-        )
-        return response['choices'][0]['message']['content']
-
-Executar
-
-4. finance_calculator.py (Módulo de Cálculos Financeiros)
-python
-
-Ver todos
-import re
-
-class FinanceCalculator:
-    def perform_calculation(self, user_input):
-        if "juros" in user_input:
-            return self.calculate_interest(user_input)
-        elif "emprestimo" in user_input:
-            return self.calculate_loan(user_input)
-        # Adicione mais cálculos conforme necessário
-        else:
-            return "Desculpe, não reconheço esse tipo de cálculo."
-
-    def calculate_interest(self, user_input):
-        match = re.search(r"(\d+)%\s+de\s+(\d+)", user_input)
-        if match:
-            rate = float(match.group(1))
-            principal = float(match.group(2))
-            interest = principal * (rate / 100)
-            return f"O juros é: {interest}"
-        return "Por favor, forneça uma porcentagem e um valor."
-
-    def calculate_loan(self, user_input):
-        # Implementar cálculo de empréstimo
-        return "Cálculo de empréstimo ainda não implementado."
-
-Executar
-
-5. README.md (Documentação do Projeto)
-markdown
-# Experiência Digital para Relacionamento Financeiro
-
-Este projeto cria uma experiência digital voltada para o relacionamento financeiro, utilizando IA generativa, Python e boas práticas de UX.
-
-## Funcionalidades
-
-- **FAQs Inteligentes**: Respostas contextualizadas utilizando IA.
-- **Cálculos Financeiros**: Realização de cálculos demonstrativos simples.
-- **Explicações de Produtos**: Informações sobre produtos financeiros conforme solicitado.
-- **Persistência de Contexto**: A manutenção do contexto nas interações.
-
-## Requisitos
-
-- Python 3.x
-- Conta na OpenAI e chave da API
-- Dependências do projeto (instaladas a partir do `requirements.txt`)
-
-## Instalação
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/seu_usuario/relacionamento_financeiro.git
-   cd relacionamento_financeiro
-
-Instale as dependências:
-
-bash
-pip install -r requirements.txt
-
-Configure sua chave da API:
-
-Obtenha sua chave de API da OpenAI e substitua "SUA_API_KEY" no arquivo chatbot.py.
-Execução
-Execute o arquivo main.py com o comando:
-
-bash
-python main.py
-
-Teste a API
-Utilize um cliente REST (como Postman ou curl) para testar a API:
-
-bash
-curl -X POST http://127.0.0.1:5000/ask -H "Content-Type: application/json" -d '{"question": "Calcule 15% de 200"}'
-
-Considerações Finais
-Este projeto demonstra a integração de diversas tecnologias para criar um assistente digital eficiente e centrado no usuário, ideal para o relacionamento financeiro. Sinta-se à vontade para expandir as funcionalidades e melhorar a experiência do usuário!
-
-
-### Conclusão
-
-Este projeto oferece uma base sólida para uma aplicação que combina interações baseadas em IA, cálculos financeiros e boas práticas de UX. Você pode expandir e personalizar as funcionalidades conforme necessário. Se houver qualquer dúvida ou se precisar de mais informações, estou à disposição para ajudar!
+# RODAPÉ DE SEGURANÇA (ÉTICA E UX)
+st.caption("Aviso: Esta é uma simulação educacional. Sempre consulte um gerente oficial antes de investir.")
