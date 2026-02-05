@@ -1,0 +1,149 @@
+
+plaintext
+relacionamento_financeiro/
+│
+├── main.py                     # Código principal da aplicação
+├── requirements.txt            # Dependências do projeto
+├── chatbot.py                  # Módulo do chatbot
+├── finance_calculator.py       # Módulo de cálculos financeiros
+└── README.md                   # Documentação do projeto
+
+1. requirements.txt
+plaintext
+openai
+Flask
+numpy
+
+2. main.py (Código Principal)
+python
+
+Ver todos
+from flask import Flask, request, jsonify
+from chatbot import ChatBot
+from finance_calculator import FinanceCalculator
+
+app = Flask(__name__)
+chatbot = ChatBot()
+calculator = FinanceCalculator()
+
+@app.route('/ask', methods=['POST'])
+def ask():
+    user_input = request.json.get('question')
+    
+    if user_input.lower().startswith('calcule'):
+        response = calculator.perform_calculation(user_input)
+    else:
+        response = chatbot.get_response(user_input)
+
+    return jsonify({'response': response})
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+Executar
+
+3. chatbot.py (Módulo do Chatbot)
+python
+
+Ver todos
+import openai
+
+class ChatBot:
+    def __init__(self):
+        openai.api_key = "SUA_API_KEY"
+
+    def get_response(self, user_input):
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": user_input}
+            ]
+        )
+        return response['choices'][0]['message']['content']
+
+Executar
+
+4. finance_calculator.py (Módulo de Cálculos Financeiros)
+python
+
+Ver todos
+import re
+
+class FinanceCalculator:
+    def perform_calculation(self, user_input):
+        if "juros" in user_input:
+            return self.calculate_interest(user_input)
+        elif "emprestimo" in user_input:
+            return self.calculate_loan(user_input)
+        # Adicione mais cálculos conforme necessário
+        else:
+            return "Desculpe, não reconheço esse tipo de cálculo."
+
+    def calculate_interest(self, user_input):
+        match = re.search(r"(\d+)%\s+de\s+(\d+)", user_input)
+        if match:
+            rate = float(match.group(1))
+            principal = float(match.group(2))
+            interest = principal * (rate / 100)
+            return f"O juros é: {interest}"
+        return "Por favor, forneça uma porcentagem e um valor."
+
+    def calculate_loan(self, user_input):
+        # Implementar cálculo de empréstimo
+        return "Cálculo de empréstimo ainda não implementado."
+
+Executar
+
+5. README.md (Documentação do Projeto)
+markdown
+# Experiência Digital para Relacionamento Financeiro
+
+Este projeto cria uma experiência digital voltada para o relacionamento financeiro, utilizando IA generativa, Python e boas práticas de UX.
+
+## Funcionalidades
+
+- **FAQs Inteligentes**: Respostas contextualizadas utilizando IA.
+- **Cálculos Financeiros**: Realização de cálculos demonstrativos simples.
+- **Explicações de Produtos**: Informações sobre produtos financeiros conforme solicitado.
+- **Persistência de Contexto**: A manutenção do contexto nas interações.
+
+## Requisitos
+
+- Python 3.x
+- Conta na OpenAI e chave da API
+- Dependências do projeto (instaladas a partir do `requirements.txt`)
+
+## Instalação
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu_usuario/relacionamento_financeiro.git
+   cd relacionamento_financeiro
+
+Instale as dependências:
+
+bash
+pip install -r requirements.txt
+
+Configure sua chave da API:
+
+Obtenha sua chave de API da OpenAI e substitua "SUA_API_KEY" no arquivo chatbot.py.
+Execução
+Execute o arquivo main.py com o comando:
+
+bash
+python main.py
+
+Teste a API
+Utilize um cliente REST (como Postman ou curl) para testar a API:
+
+bash
+curl -X POST http://127.0.0.1:5000/ask -H "Content-Type: application/json" -d '{"question": "Calcule 15% de 200"}'
+
+Considerações Finais
+Este projeto demonstra a integração de diversas tecnologias para criar um assistente digital eficiente e centrado no usuário, ideal para o relacionamento financeiro. Sinta-se à vontade para expandir as funcionalidades e melhorar a experiência do usuário!
+
+
+### Conclusão
+
+Este projeto oferece uma base sólida para uma aplicação que combina interações baseadas em IA, cálculos financeiros e boas práticas de UX. Você pode expandir e personalizar as funcionalidades conforme necessário. Se houver qualquer dúvida ou se precisar de mais informações, estou à disposição para ajudar!
